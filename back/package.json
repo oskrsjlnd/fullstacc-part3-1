@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../front/ && npm run build && cp -r dist ../back",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
   },
   "repository": {
     "type": "git",
@@ -17,12 +21,15 @@
   "bugs": {
     "url": "https://github.com/oskrsjlnd/fullstacc-part3-1/issues"
   },
-  "homepage": "https://github.com/oskrsjlnd/fullstacc-part3-1#readme",
+  "homepage": "https://alwayskeepit69.fly.dev/",
   "devDependencies": {
-    "morgan": "^1.10.0",
+    "@flydotio/dockerfile": "^0.5.0",
     "nodemon": "^3.0.3"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
   }
 }
