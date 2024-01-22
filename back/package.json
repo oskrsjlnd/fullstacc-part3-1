@@ -24,11 +24,13 @@
   "homepage": "https://alwayskeepit69.fly.dev/",
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.0",
+    "dotenv": "^16.3.2",
     "nodemon": "^3.0.3"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongoose": "^8.1.0",
     "morgan": "^1.10.0",
     "path": "^0.12.7"
   }

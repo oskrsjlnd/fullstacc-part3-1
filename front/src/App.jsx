@@ -18,10 +18,17 @@ const App = () => {
       .then(fetchedPersons => {
         setPersons(fetchedPersons)
       })
+      .catch(error => {
+        showNotification(`${error}`, 'error')
+      })
   }, [])
 
-  const showNotification = (content) => {
-    setNotification(content)
+  const showNotification = (content, type) => {
+    console.log(content)
+    setNotification({
+        content: content,
+        type: type
+    })
     setTimeout(() => {
       setNotification(null)
     }, 5000)
@@ -44,11 +51,12 @@ const App = () => {
             return returnedPerson
           })
           .then((returnedPerson) => {
-            showNotification(`Updated ${returnedPerson.name} successfully`)
+            showNotification(`Updated ${returnedPerson.name} successfully`, 'info')
             return returnedPerson
           })
           .catch(error => {
-            showNotification(`Updating ${returnedPerson.name} was unsuccessful`)
+            console.log('update', error.response.data.error)
+            showNotification(`${error.response.data.error}`, 'error')
           })
       }
     }
@@ -63,15 +71,17 @@ const App = () => {
           contactService
           .newPerson(newPerson)
           .then(returnedPerson => {
+            console.log(returnedPerson)
             setPersons(persons.concat(returnedPerson))
             return returnedPerson
           })
           .then(person => {
-            showNotification(`Created ${person.name} successfully`)
+            showNotification(`Created ${person.name} successfully`, 'info')
             return person
           })
           .catch(error => {
-            showNotification(`Creating ${person.name} was unsuccessful`)
+            console.log('uusi', error.response.data.error)
+            showNotification(`${error.response.data.error}`, 'error')
           })
           setNewName('')
           setNewNumber('')
@@ -84,11 +94,11 @@ const App = () => {
       .deletePerson(person.id)
       .then(returnedPerson => {
           setPersons(persons.filter(p => p.id !== person.id))
-          showNotification(`${person.name} was deleted`)
-        })
-        .catch(error => {
-          showNotification(`${person.name} could not be deleted.`)
-        })
+          showNotification(`${person.name} was deleted`, 'info')
+      })
+      .catch(error => {
+        showNotification(`${error}`, 'error')
+      })
     }
   }
 
@@ -99,7 +109,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification notification={notification} />
       <Filter 
         nameContains={nameContains}
         handleFilterChange={handleFilterChange} 
