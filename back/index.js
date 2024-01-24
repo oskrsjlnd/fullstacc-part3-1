@@ -57,6 +57,8 @@ app.post('/api/persons', (req, res, next) => {
         "name": req.body.name,
         "number": req.body.number
     })
+    const testRes = /(\d{2}-\d{6,})|(\d{3}-\d{5,})/.test(newPerson.number)
+    console.log(testRes)
     newPerson.save()
         .then(result => {
             console.log('Created:', result)
