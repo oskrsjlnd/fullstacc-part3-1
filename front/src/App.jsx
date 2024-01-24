@@ -24,7 +24,6 @@ const App = () => {
   }, [])
 
   const showNotification = (content, type) => {
-    console.log(content)
     setNotification({
         content: content,
         type: type
@@ -50,13 +49,12 @@ const App = () => {
             )
             return returnedPerson
           })
-          .then((returnedPerson) => {
+          .then(returnedPerson => {
             showNotification(`Updated ${returnedPerson.name} successfully`, 'info')
             return returnedPerson
           })
           .catch(error => {
-            console.log('update', error.response.data.error)
-            showNotification(`${error.response.data.error}`, 'error')
+            showNotification(`${person.name} has been deleted`, 'error')
           })
       }
     }
@@ -71,7 +69,6 @@ const App = () => {
           contactService
           .newPerson(newPerson)
           .then(returnedPerson => {
-            console.log(returnedPerson)
             setPersons(persons.concat(returnedPerson))
             return returnedPerson
           })
@@ -80,7 +77,6 @@ const App = () => {
             return person
           })
           .catch(error => {
-            console.log('uusi', error.response.data.error)
             showNotification(`${error.response.data.error}`, 'error')
           })
           setNewName('')
@@ -103,7 +99,6 @@ const App = () => {
   }
 
   const handleFilterChange = (event) => {
-    console.log(event.target.value)
     setNameContains(event.target.value)
   }
   return (
